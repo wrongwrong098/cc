@@ -1,0 +1,48 @@
+public class CreateStudent {
+    // Properties for form fields
+    public String name { get; set; }
+    public String email { get; set; }
+    public String phone { get; set; }
+    public String department { get; set; }
+    public String rollNumber { get; set; }
+
+    // Property for department options (getter)
+    public List<SelectOption> getDeptOptions() {
+        List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('', '- None -'));
+        options.add(new SelectOption('IT', 'IT'));
+        options.add(new SelectOption('MECH', 'MECH'));
+        options.add(new SelectOption('COMP', 'COMP'));
+        options.add(new SelectOption('CIVIL', 'CIVIL'));
+        return options;
+    }
+
+    // Method to create a student
+    public PageReference createStudent() {
+        if (!String.isEmpty(name)) {
+            Student__c s = new Student__c(
+                Name = name,
+                Email__c = email,
+                Phone__c = phone,
+                Department__c = department,
+                Roll_No__c = rollNumber
+            );
+            insert s;
+
+            PageReference pg = new PageReference('/' + s.Id);
+            pg.setRedirect(true);
+            return pg;
+        } else {
+            ApexPages.addMessage(new ApexPages.Message(
+                ApexPages.Severity.ERROR,
+                'Please enter Student Name'
+            ));
+            return null;
+        }
+    }
+
+    // Method to cancel and go back to the object home page
+    public PageReference cancelStudent() {
+        return new PageReference('/' + Student__c.SObjectType.getDescribe().getKeyPrefix());
+    }
+}
