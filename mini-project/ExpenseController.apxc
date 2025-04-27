@@ -1,0 +1,25 @@
+public class ExpenseController {
+    
+    // Public getter and setter for the Expense record
+    public Expense__c expense { get; set; }
+    
+    // List to hold all the saved expenses
+    public List<Expense__c> expenses { get; set; }
+
+    public ExpenseController() {
+        expense = new Expense__c(); // Initialize new expense record
+        expenses = [SELECT Id, Name, Amount__c, Date__c FROM Expense__c]; // Retrieve all saved expenses
+    }
+    
+    public PageReference saveExpense() {
+        try {
+            insert expense;
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.CONFIRM, 'Expense saved successfully.'));
+            expenses.add(expense); // Add the newly saved expense to the list
+            expense = new Expense__c(); // Reset the form after saving
+        } catch(Exception e) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Error: ' + e.getMessage()));
+        }
+        return null;
+    }
+}
