@@ -1,0 +1,43 @@
+public class CreateEmployee {
+    
+    public String name { get; set; }
+    public String email { get; set; }
+    public String phone { get; set; }
+    public String department { get; set; }
+    public String designation { get; set; }
+    public List<SelectOption> departmentOptions { get; set; }
+
+    // REQUIRED CONSTRUCTOR for extension controller
+    public CreateEmployee(ApexPages.StandardController controller) {
+        departmentOptions = new List<SelectOption>();
+        departmentOptions.add(new SelectOption('', '- None -'));
+        departmentOptions.add(new SelectOption('HR', 'HR'));
+        departmentOptions.add(new SelectOption('IT', 'IT'));
+        departmentOptions.add(new SelectOption('SALES', 'SALES'));
+        departmentOptions.add(new SelectOption('FINANCE', 'FINANCE'));
+    }
+
+    public PageReference createEmployee() {
+        if (!String.isEmpty(name)) {
+            Employee__c emp = new Employee__c(
+                Name = name,
+                Email__c = email,
+                Phone_Number__c = phone,
+                Department__c = department,
+                Designation__c = designation
+            );
+            insert emp;
+
+            PageReference pg = new PageReference('/' + emp.Id);
+            pg.setRedirect(true);
+            return pg;
+        } else {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please enter Employee Name'));
+            return null;
+        }
+    }
+
+    public PageReference cancelEmployee() {
+        return new PageReference('/' + Schema.SObjectType.Employee__c.getKeyPrefix() + '/o');
+    }
+}
