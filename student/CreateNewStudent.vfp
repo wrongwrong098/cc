@@ -1,0 +1,22 @@
+<apex:page controller="CreateStudent">
+    <apex:form >
+        <apex:pageBlock title="Create Student Record">
+            <apex:pageMessages />
+
+            <apex:pageBlockSection columns="2">
+                <apex:inputText value="{!name}" label="Student Name" required="true" />
+                <apex:inputText value="{!rollNumber}" label="Roll Number" />
+                <apex:inputText value="{!email}" label="Email" />
+                <apex:inputText value="{!phone}" label="Phone" />
+                <apex:selectList value="{!department}" size="1" label="Department">
+                    <apex:selectOptions value="{!deptOptions}" />
+                </apex:selectList>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!createStudent}" value="Save" />
+                <apex:commandButton action="{!cancelStudent}" value="Cancel" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
