@@ -1,0 +1,22 @@
+<apex:page controller="ExpenseController">
+    <h1>Expense Tracker</h1>
+    
+    <apex:form >
+        <!-- Form to add a new expense -->
+        <apex:pageMessages />
+        <apex:inputField value="{!expense.Name}" label="Expense Name"/>
+        <apex:inputField value="{!expense.Amount__c}" label="Amount"/>
+        <apex:inputField value="{!expense.Date__c}" label="Date"/>
+        
+        <apex:commandButton action="{!saveExpense}" value="Save Expense"/>
+    </apex:form>
+    
+    <h2>Saved Expenses:</h2>
+    <apex:pageBlock title="Expense List">
+        <apex:pageBlockTable value="{!expenses}" var="exp">
+            <apex:column value="{!exp.Name}" headerValue="Expense Name"/>
+            <apex:column value="{!exp.Amount__c}" headerValue="Amount"/>
+            <apex:column value="{!exp.Date__c}" headerValue="Date"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:page>
