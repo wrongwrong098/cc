@@ -1,0 +1,20 @@
+<apex:page standardController="Employee__c" extensions="CreateEmployee">
+    <apex:form id="empForm">
+        <apex:pageBlock title="Create Employee">
+            <apex:pageMessages />
+            <apex:pageBlockSection columns="2">
+                <apex:inputText value="{!name}" label="Employee Name" required="true" />
+                <apex:inputText value="{!email}" label="Email" />
+                <apex:inputText value="{!phone}" label="Phone Number" />
+                <apex:selectList value="{!department}" label="Department" size="1">
+                    <apex:selectOptions value="{!departmentOptions}" />
+                </apex:selectList>
+                <apex:inputText value="{!designation}" label="Designation" />
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!createEmployee}" value="Save" />
+                <apex:commandButton action="{!cancelEmployee}" value="Cancel" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
